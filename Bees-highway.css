@@ -6,14 +6,24 @@ body {
   display: flex;
 }
 #container {
-  width: 100%;
-  height: 655px;
-  border: 1px solid black;
-  background-image: url(./bgroad.png);
-  background-size: cover;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrollbars from appearing due to animation */
+  height: 100vh; /* Full viewport height */
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative; /* Establishes a positioning context for absolute positioning inside */
+}
+
+#background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the full container without being stretched */
+  z-index: -1; /* Ensures the video stays behind other content */
 }
 
 #bee-body {
@@ -22,7 +32,7 @@ body {
   border: 1px solid black;
   background-color: yellow;
   border-radius: 50%;
-  animation: bee-body 10s linear infinite;
+  animation: bee-body 20s linear infinite;
   margin-top: 400px;
 }
 #tail {
@@ -49,12 +59,14 @@ body {
   transform: rotate(50deg);
   margin-top: -14px;
   margin-left: -2px;
+  animation: flap-wing-1-l 0.8s linear infinite;
 }
 #wing-2-l {
   transform: rotate(30deg);
   margin-top: -10px;
   margin-left: -10px;
   position: absolute;
+  animation: flap-wing-2-l 0.6s linear infinite;
 }
 #wing-1-r,
 #wing-2-r {
@@ -71,11 +83,36 @@ body {
   transform: rotate(20deg);
   margin-left: 35px;
   margin-top: -40px;
+  animation: flap-wing-2-r 0.9s linear infinite;
 }
+
+/* Keyframe animations */
+@keyframes flap-wing-1-l {
+  0%, 100% { transform: rotate(50deg); }
+  50% { transform: rotate(60deg); }
+}
+
+@keyframes flap-wing-2-l {
+  0%, 100% { transform: rotate(30deg); }
+  50% { transform: rotate(40deg); }
+}
+
+@keyframes flap-wing-1-r {
+  0%, 100% { transform: rotate(30deg); }
+  50% { transform: rotate(20deg); }
+}
+
+@keyframes flap-wing-2-r {
+  0%, 100% { transform: rotate(20deg); }
+  50% { transform: rotate(10deg); }
+}
+
+
 #wing-1-r {
   transform: rotate(30deg);
   margin-left: 45px;
   margin-top: -40px;
+  animation: flap-wing-1-r 0.7s linear infinite;
 }
 #body-close {
   border-radius: 50%;
@@ -162,6 +199,7 @@ body {
   border-top: 2px;
   transform: rotate(90deg);
 }
+
 #leg-1,
 #leg-2,
 #leg-3,
@@ -175,54 +213,123 @@ body {
   background-image: linear-gradient(yellow, white);
   display: inline-block;
 }
+/* Common styles for all legs */
+#leg-1, #leg-2, #leg-3, #leg-4, #leg-5, #leg-6 {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 #leg-1 {
   transform: rotate(20deg);
   margin-left: 10px;
   margin-top: 56px;
+  animation-name: leg-move-1;
 }
 #leg-2 {
   transform: rotate(-10deg);
   margin-top: 4px;
+  animation-name: leg-move-2;
 }
 #leg-3 {
   transform: rotate(20deg);
   margin-left: 10px;
   margin-top: 65px;
   position: absolute;
+  animation-name: leg-move-3;
 }
 #leg-4 {
   transform: rotate(-10deg);
   margin-left: 17px;
   margin-top: 65px;
   position: absolute;
+  animation-name: leg-move-4;
 }
 #leg-5 {
   transform: rotate(20deg);
   position: absolute;
   margin-left: 40px;
   margin-top: 66px;
+  animation-name: leg-move-5;
 }
 #leg-6 {
   transform: rotate(-10deg);
   position: absolute;
   margin-left: 45px;
   margin-top: 66px;
+  animation-name: leg-move-6;
 }
+
+/* Keyframe animations */
+@keyframes leg-move-1 {
+  from {
+    transform: rotate(20deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes leg-move-2 {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes leg-move-3 {
+  from {
+    transform: rotate(20deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes leg-move-4 {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes leg-move-5 {
+  from {
+    transform: rotate(20deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes leg-move-6 {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(20deg);
+  }
+}
+
 @keyframes bee-body {
   0% {
     transform: translate(0px);
   }
   20% {
-    transform: translateX(550px);
+    transform: translateX(670px);
   }
   40% {
-    transform: translate(550px, -380px);
+    transform: translate(670px, -450px);
   }
   60% {
-    transform: translate(-550px, -380px);
+    transform: translate(-670px, -450px);
   }
   80% {
-    transform: translate(-550px);
+    transform: translate(-670px);
   }
   100% {
     transform: translate(0px, 0px);
@@ -276,7 +383,7 @@ body {
     transform: translate(0px, 0px);
   }
 }
-#wing-1-l,
+/* #wing-1-l,
 #wing-2-r {
   animation: wings 0.8ms linear infinite;
 }
@@ -284,7 +391,7 @@ body {
   100% {
     transform: rotate(45deg);
   }
-}
+} */
 @keyframes tail {
   50% {
     transform: rotate(30deg);
